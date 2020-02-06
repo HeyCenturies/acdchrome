@@ -1,3 +1,5 @@
+
+
 var usertoken='';
 var userObject;
 var userId;
@@ -35,8 +37,9 @@ var main = function(){
             $(".day-column-body-solid").on("click", function(){
                 waitForEl('.modal-footer', function() {
                     $('.modal-footer').append(`<button id='saveweek' class="btn btn-outline-success text-uppercase font-weight-bold" type="button">Save Week</button>`);
-                    console.log(usertoken);
+                    //console.log(usertoken);
                     $("#saveweek").on("click", function(){
+                        $('.modal-content').append(`<h3> Loading...</h3></h1><img src="http://loadinggif.com/generated-image?imageId=3&bgColor=%23ffffff&fgColor=%230095f4&transparentBg=1&download=0&random=0.7259311683289018"/>`);
                         taskkey = $(".custom-select option:selected").val();
                         notes = $(".form-control-text-area").val();
                         getActivity();

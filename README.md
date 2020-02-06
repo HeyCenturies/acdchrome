@@ -5,3 +5,6 @@ This beta version that includes: <br>
   - [US] 8h time-entry for the whole week by pressing the "Save Week" button
   
 PS: When you access the month report page, reload it so the related feature above can be loaded. This gonna be fixed in the future, this is a workaround considering how ACDC loads the page and how Chrome plugins work.</p>
+
+Creators: Ricardo Henrique
+          Vitor Medeiros

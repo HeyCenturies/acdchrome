@@ -9,3 +9,13 @@ PS: When you access the month report page, reload it so the related feature abov
 Creators: 
   - Ricardo Henrique
   - Vitor Medeiros
+
+# How to Install
+
+1. Clone the repository
+2. Open `chrome://extensions/`
+3. Enable Developer Mode (Top-Right Corner)
+4. Click "Load Unpacked" button and select the project folder
+5. Open ACDC and enjoy the features!
+
+---

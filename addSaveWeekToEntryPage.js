@@ -30,12 +30,17 @@ $(document).ready(function() {
 var main = function(){
     usertoken = localStorage.getItem('accessToken');
     getacdcuser();
+    console.log("Validating Country...");
     if(country != 'US'){
         console.log("Country: "+country+" .Save week feature disabled");
     }else{
+        console.log("Enabling Save week feature");
         waitForEl('.day-column-body-solid', function() {
+            console.log("Page loaded, setting listener to week day column");
             $(".day-column-body-solid").on("click", function(){
+                console.log("Click! Waiting for entry div to show up");
                 waitForEl('.modal-footer', function() {
+                    console.log("Adding save week button");
                     $('.modal-footer').append(`<button id='saveweek' class="btn btn-outline-success text-uppercase font-weight-bold" type="button">Save Week</button>`);
                     //console.log(usertoken);
                     $("#saveweek").on("click", function(){
@@ -158,7 +163,7 @@ var entry = function(){
 }
 
 var waitForEl = function(selector, callback) {
-    if (jQuery(selector).length) {
+    if ($(selector).length) {
         callback();
     } else {
         setTimeout(function() {

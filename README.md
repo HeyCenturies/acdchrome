@@ -7,8 +7,9 @@ This beta version that includes: <br>
 PS: When you access the month report page, reload it so the related feature above can be loaded. This gonna be fixed in the future, this is a workaround considering how ACDC loads the page and how Chrome plugins work.</p>
 
 Creators: 
-  - Ricardo Henrique
   - Vitor Medeiros
+  - Ricardo Henrique
+  
 
 # How to Install
 
@@ -19,3 +20,19 @@ Creators:
 5. Open ACDC and enjoy the features!
 
 ---
+
+# Where are the features at?
+
+This version currently supports two features:
+
+<b>Monthly Calculator by project</b> (usefull when you're part of more than one project and wants to check how many hours you spent/have to spend for a specific project):
+1. Go to ACDC
+2. Click Monthly Report
+3. F5 to reload the page (step won't be required in the future)
+4. You will see a button under the monthly report button
+         
+<b>Save Week Button</b>, for <b>US EMPLOYEES ONLY</b> , you can fill your timesheet from monday to the current day with 8h of your selected project and include notes to it:
+1. Go to ACDC
+2. Click on any day of the week
+3. You'll see the green "Save Week" button right next to the normal blue save button
+4. Select your project (must), add notes (optional) and click on "Save Week", page will be reloaded once its done.

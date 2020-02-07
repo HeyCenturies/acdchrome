@@ -39,6 +39,8 @@ This version currently supports two features:
 5. Double check your entries,make sure everything was filled correctly as expected
 6. Enjoy not needing to fill each day individually!
 
+[Save Week Troubleshoot Wiki](https://github.com/HeyCenturies/acdchrome/wiki/%5BSave-Week-TroubleShooting%5D)
+
 ---
 
 ### ROADMAP

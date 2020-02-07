@@ -36,3 +36,16 @@ This version currently supports two features:
 2. Click on any day of the week
 3. You'll see the green "Save Week" button right next to the normal blue save button
 4. Select your project (must), add notes (optional) and click on "Save Week", page will be reloaded once its done.
+
+---
+
+### ROADMAP
+
+```
+[Monthly Calculator] Fix the refresh page requirement
+[Save Week] Better log messages
+[Save Week] Add progress bar
+[New Feature] Daily Entry + Scheduler Support
+[Project] Re-write the whole thing using React + Typescript
+```
+

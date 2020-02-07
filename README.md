@@ -31,11 +31,13 @@ This version currently supports two features:
 3. F5 to reload the page (step won't be required in the future)
 4. You will see a button under the monthly report button
          
-<b>Save Week Button</b>, for <b>US EMPLOYEES ONLY</b> , you can fill your timesheet from monday to the current day with 8h of your selected project and include notes to it:
-1. Go to ACDC
+<b>Save Week Button</b>, for <b>US EMPLOYEES ONLY</b> , you can fill your timesheet from monday to the current day of the week.
+1. Open ACDC
 2. Click on any day of the week
 3. You'll see the green "Save Week" button right next to the normal blue save button
 4. Select your project (must), add notes (optional) and click on "Save Week", page will be reloaded once its done.
+5. Double check your entries,make sure everything was filled correctly as expected
+6. Enjoy not needing to fill each day individually!
 
 ---
 

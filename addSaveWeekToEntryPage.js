@@ -37,7 +37,7 @@ var main = function(){
         console.log("Enabling Save week feature");
         waitForEl('.day-column-body-solid', function() {
             console.log("Page loaded, setting listener to week day column");
-            $(".day-column-body-solid").on("click", function(){
+            $(".day-column-body-solid,.day-column-footer-entry").on("click", function(){
                 console.log("Click! Waiting for entry div to show up");
                 waitForEl('.modal-footer', function() {
                     console.log("Adding save week button");

@@ -41,35 +41,14 @@ var main = function(){
                 console.log("Click! Waiting for entry div to show up");
                 waitForEl('.modal-footer', function() {
                     console.log("Adding save week button");
-                    $('.modal-footer').append(`<button id='saveweek' class="btn btn-outline-success text-uppercase font-weight-bold" type="button">Save Week</button>`);
+                    $('.modal-footer').append(`<div id="saveweekdiv"><button id='saveweek' class="btn btn-outline-success text-uppercase font-weight-bold" type="button">Save Week</button></div>`);
                     //console.log(usertoken);
-                    $("#saveweek").on("click", function(){
+                    $("#saveweekdiv").on("click",function() {
+                        console.log("click na div");
                         $('.modal-content').append(`<h3> Loading...</h3></h1><img src="http://loadinggif.com/generated-image?imageId=3&bgColor=%23ffffff&fgColor=%230095f4&transparentBg=1&download=0&random=0.7259311683289018"/>`);
-                        taskkey = $(".custom-select option:selected").val();
-                        notes = $(".form-control-text-area").val();
-                        getActivity();
-                        $('.day-column-solid').each(function(){
-                            createpayloadus(transformDate(firstDateWeek),projname,taskkey,projid,projstart,projend,billable,userId,notes);
-                            //se tiver hora logada nao loga
-                            if(parseInt(($(this).find("div").last().text().split("h")[0]))>0){
-                                console.log("Ja tem hora logada pra"+transformDate(firstDateWeek)+" movendo para proximo dia");
-                                if($(this).find("div").first().find("p").hasClass("day-column-title-selected")){return false}
-                            } else{
-                                if($(this).find("div").first().find("p").hasClass("day-column-title-selected")){
-                                    console.log("running entry for current week day");
-                                    entry();
-                                    return false;
-                                }
-                                else{
-                                    if($(this).find("p").first().first().text().split('')[0]!='S'){
-                                        console.log("running entry for "+transformDate(firstDateWeek));
-                                        entry();
-                                    }
-                                }
-                            }
-                            firstDateWeek.setDate(firstDateWeek.getDate()+1);
-                        })
-                        location.reload(true);
+                    })
+                    $("#saveweek").on("click", function(){
+                        setTimeout(saveweekaction,2000);
                     })
                 })
             });
@@ -78,6 +57,34 @@ var main = function(){
     }
 };
 
+var saveweekaction = function() {
+    // $('.modal-content').append(`<h3> Loading...</h3></h1><img src="http://loadinggif.com/generated-image?imageId=3&bgColor=%23ffffff&fgColor=%230095f4&transparentBg=1&download=0&random=0.7259311683289018"/>`);
+    taskkey = $(".custom-select option:selected").val();
+    notes = $(".form-control-text-area").val();
+    getActivity();
+    $('.day-column-solid').each(function(){
+        createpayloadus(transformDate(firstDateWeek),projname,taskkey,projid,projstart,projend,billable,userId,notes);
+        //se tiver hora logada nao loga
+        if(parseInt(($(this).find("div").last().text().split("h")[0]))>0){
+            console.log("Ja tem hora logada pra"+transformDate(firstDateWeek)+" movendo para proximo dia");
+            if($(this).find("div").first().find("p").hasClass("day-column-title-selected")){return false}
+        } else{
+            if($(this).find("div").first().find("p").hasClass("day-column-title-selected")){
+                console.log("running entry for current week day");
+                entry();
+                return false;
+            }
+            else{
+                if($(this).find("p").first().first().text().split('')[0]!='S'){
+                    console.log("running entry for "+transformDate(firstDateWeek));
+                    entry();
+                }
+            }
+        }
+        firstDateWeek.setDate(firstDateWeek.getDate()+1);
+    })
+    location.reload(true);
+}
 var transformDate = function(date){
     var dd = String(date.getDate()).padStart(2, '0');
     var mm = String(date.getMonth() + 1).padStart(2, '0');
@@ -103,7 +110,7 @@ var setup = function(){
 };
 
 var createpayloadbr = function(date,projname,taskkey,projid,projstart,projend,billable,userId,notes){
-    payload = {"date":`${date}`,"startTime":"21:45",
+    payload = {"date":"2020-02-13","startTime":"21:45",
         "endTime":"21:46","notes":`${notes}`,"totalWorkedHours":0,
         "activity":
             {"fullName":`${projname}`,"taskKey":`${taskkey}`,"projectId":`${projid}`,

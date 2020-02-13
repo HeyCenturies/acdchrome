@@ -41,6 +41,10 @@ This version currently supports two features:
 
 [Save Week Troubleshoot Wiki](https://github.com/HeyCenturies/acdchrome/wiki/%5BSave-Week-TroubleShooting%5D)
 
+
+![usage demo](/images/giftopdovitor.gif)
+
+
 ---
 
 ### ROADMAP

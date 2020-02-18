@@ -64,21 +64,15 @@ var saveweekaction = function() {
     getActivity();
     $('.day-column-solid').each(function(){
         createpayloadus(transformDate(firstDateWeek),projname,taskkey,projid,projstart,projend,billable,userId,notes);
-        //se tiver hora logada nao loga
-        if(parseInt(($(this).find("div").last().text().split("h")[0]))>0){
-            console.log("Ja tem hora logada pra"+transformDate(firstDateWeek)+" movendo para proximo dia");
-            if($(this).find("div").first().find("p").hasClass("day-column-title-selected")){return false}
-        } else{
-            if($(this).find("div").first().find("p").hasClass("day-column-title-selected")){
-                console.log("running entry for current week day");
+        if($(this).find("div").first().find("p").hasClass("day-column-title-selected")){
+            console.log("running entry for current week day");
+            entry();
+            return false;
+        }
+        else{
+            if($(this).find("p").first().first().text().split('')[0]!='S'){
+                console.log("running entry for "+transformDate(firstDateWeek));
                 entry();
-                return false;
-            }
-            else{
-                if($(this).find("p").first().first().text().split('')[0]!='S'){
-                    console.log("running entry for "+transformDate(firstDateWeek));
-                    entry();
-                }
             }
         }
         firstDateWeek.setDate(firstDateWeek.getDate()+1);
@@ -119,7 +113,10 @@ var createpayloadbr = function(date,projname,taskkey,projid,projstart,projend,bi
 }
 
 var createpayloadus = function(date,projname,taskkey,projid,projstart,projend,billable,userId,notes){
-    payload = {"date":`${date}`,"notes":`${notes}`,"totalWorkedHours":28800000,
+	var inputHours = $('input[name ="totalWorkedHours"]').val();
+	var hours = inputHours.substring(0,inputHours.search("h")); 
+	var hoursInMS = hours * 3600000;
+    payload = {"date":`${date}`,"notes":`${notes}`,"totalWorkedHours": hoursInMS,
         "activity":
             {"fullName":`${projname}`,"taskKey":`${taskkey}`,"projectId":`${projid}`,
                 "beginDate":`${projstart}`,"endDate":`${projend}`,"billable":`${billable}`},"userId":`${userId}`}

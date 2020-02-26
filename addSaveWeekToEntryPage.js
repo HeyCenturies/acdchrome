@@ -58,21 +58,28 @@ var main = function(){
 };
 
 var saveweekaction = function() {
-    // $('.modal-content').append(`<h3> Loading...</h3></h1><img src="http://loadinggif.com/generated-image?imageId=3&bgColor=%23ffffff&fgColor=%230095f4&transparentBg=1&download=0&random=0.7259311683289018"/>`);
     taskkey = $(".custom-select option:selected").val();
     notes = $(".form-control-text-area").val();
     getActivity();
     $('.day-column-solid').each(function(){
         createpayloadus(transformDate(firstDateWeek),projname,taskkey,projid,projstart,projend,billable,userId,notes);
-        if($(this).find("div").first().find("p").hasClass("day-column-title-selected")){
-            console.log("running entry for current week day");
-            entry();
-            return false;
+        if((parseInt(($(this).find("div").last().text().split("h")[0]))+parseInt($('input[name ="totalWorkedHours"]').val()))>8){
+            console.log("Ja tem hora logada pra"+transformDate(firstDateWeek)+" movendo para proximo dia");
+            if($(this).find("div").first().find("p").hasClass("day-column-title-selected")){
+                return false
+            }
         }
         else{
-            if($(this).find("p").first().first().text().split('')[0]!='S'){
-                console.log("running entry for "+transformDate(firstDateWeek));
+            if($(this).find("div").first().find("p").hasClass("day-column-title-selected")){
+                console.log("running entry for current week day");
                 entry();
+                return false;
+            }
+            else{
+                if($(this).find("p").first().first().text().split('')[0]!='S'){
+                    console.log("running entry for "+transformDate(firstDateWeek));
+                    entry();
+                }
             }
         }
         firstDateWeek.setDate(firstDateWeek.getDate()+1);

@@ -63,13 +63,9 @@ var saveweekaction = function() {
     getActivity();
     $('.day-column-solid').each(function(){
         createpayloadus(transformDate(firstDateWeek),projname,taskkey,projid,projstart,projend,billable,userId,notes);
-        if((parseInt(($(this).find("div").last().text().split("h")[0]))+parseInt($('input[name ="totalWorkedHours"]').val()))>8){
-            console.log("Ja tem hora logada pra"+transformDate(firstDateWeek)+" movendo para proximo dia");
-            if($(this).find("div").first().find("p").hasClass("day-column-title-selected")){
-                return false
-            }
-        }
-        else{
+        if(parseInt(($(this).find("div").last().text().split("h")[0]))>=8){
+            if($(this).find("div").first().find("p").hasClass("day-column-title-selected")){return false}
+        } else{
             if($(this).find("div").first().find("p").hasClass("day-column-title-selected")){
                 console.log("running entry for current week day");
                 entry();

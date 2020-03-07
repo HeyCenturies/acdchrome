@@ -1,5 +1,5 @@
 
-
+var weekActivity;
 var usertoken='';
 var userObject;
 var userId;
@@ -18,6 +18,7 @@ var billable = '';
 // fim do objeto
 
 //mapa meses
+var endWeek = new Date();
 var firstDateWeek= new Date();
 const meses = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
@@ -30,6 +31,9 @@ $(document).ready(function() {
 var main = function(){
     usertoken = localStorage.getItem('accessToken');
     getacdcuser();
+    getWeeklyActivity();
+    unitTest();
+    
     console.log("Validating Country...");
     if(country != 'US'){
         console.log("Country: "+country+" .Save week feature disabled");
@@ -42,7 +46,6 @@ var main = function(){
                 waitForEl('.modal-footer', function() {
                     console.log("Adding save week button");
                     $('.modal-footer').append(`<div id="saveweekdiv"><button id='saveweek' class="btn btn-outline-success text-uppercase font-weight-bold" type="button">Save Week</button></div>`);
-                    //console.log(usertoken);
                     $("#saveweekdiv").on("click",function() {
                         console.log("click na div");
                         $('.modal-content').append(`<h3> Loading...</h3></h1><img src="http://loadinggif.com/generated-image?imageId=3&bgColor=%23ffffff&fgColor=%230095f4&transparentBg=1&download=0&random=0.7259311683289018"/>`);
@@ -63,25 +66,43 @@ var saveweekaction = function() {
     getActivity();
     $('.day-column-solid').each(function(){
         createpayloadus(transformDate(firstDateWeek),projname,taskkey,projid,projstart,projend,billable,userId,notes);
-        if(parseInt(($(this).find("div").last().text().split("h")[0]))>=8){
+        //remove this lock(l-66) later
+        if(parseInt(($(this).find("div").last().text().split("h")[0]))>=40){        
             if($(this).find("div").first().find("p").hasClass("day-column-title-selected")){return false}
         } else{
             if($(this).find("div").first().find("p").hasClass("day-column-title-selected")){
-                console.log("running entry for current week day");
-                entry();
-                return false;
+                if(compareActivity(taskkey,transformDate(firstDateWeek))){
+                    return false;
+                } else {
+                    console.log("running entry for current week day");
+                    entry();
+                    return false;
+                }
             }
             else{
                 if($(this).find("p").first().first().text().split('')[0]!='S'){
-                    console.log("running entry for "+transformDate(firstDateWeek));
-                    entry();
+                    if(!compareActivity(taskkey,transformDate(firstDateWeek))){
+                        console.log("running entry for "+transformDate(firstDateWeek));
+                        entry();
+                    }
                 }
             }
         }
         firstDateWeek.setDate(firstDateWeek.getDate()+1);
-    })
+    });
     location.reload(true);
 }
+
+//util method
+var unitTest = function(){
+    var taskkey = 458;
+    var currentDay = transformDate(firstDateWeek);
+    console.log(compareActivity(taskkey,currentDay));
+    firstDateWeek.setDate(firstDateWeek.getDate()+1);
+    var currentDay = transformDate(firstDateWeek);
+    console.log(compareActivity(taskkey,currentDay));
+}
+
 var transformDate = function(date){
     var dd = String(date.getDate()).padStart(2, '0');
     var mm = String(date.getMonth() + 1).padStart(2, '0');
@@ -103,7 +124,8 @@ var getFirstDate = function(){
 var setup = function(){
     startdate=transformDate(firstDateWeek)
     enddate=transformDate(firstDateWeek);
-
+    endWeek.setDate(firstDateWeek.getDate()+5);
+    endWeek = transformDate(endWeek);
 };
 
 var createpayloadbr = function(date,projname,taskkey,projid,projstart,projend,billable,userId,notes){
@@ -178,6 +200,46 @@ var waitForEl = function(selector, callback) {
         }, 100);
     }
 };
+
+
+var compareActivity = function(taskNumber,currentDay){
+    //map through activity list matching day and activity
+    for(let key in weekActivity.data){
+            //check if current day = activity day
+            if(weekActivity.data[key].date == currentDay){
+                var task = weekActivity.data[key].activity.taskKey;
+                if(task == taskNumber){
+                    return true
+                }
+            }
+    }
+    return false
+}
+
+var getWeeklyActivity = function(){
+    var settings = {
+        "url": `https://acdc2.avenuecode.com/api/time-entries?startDate=${startdate}&endDate=${endWeek}&userId=${userId}`,
+        "method": "GET",
+        "async": false,
+        "timeout": 0,
+        "headers": {
+            "authority": " acdc2.avenuecode.com",
+            "method": " GET",
+            "path": " /api/time-entries",
+            "scheme": " https",
+            "accept": " application/json, text/plain, */*",
+            "accept-encoding": " gzip, deflate, br",
+            "accept-language": " en-US,en;q=0.9",
+            'Authorization': `Bearer ${usertoken}`,
+            "content-type": " application/json;charset=UTF-8"
+        }
+    };
+
+    $.ajax(settings).done(function (response) {
+        weekActivity = response;
+        console.log(weekActivity);
+    });
+}
 
 
 var getActivity = function(){

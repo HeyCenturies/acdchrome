@@ -31,9 +31,7 @@ $(document).ready(function() {
 var main = function(){
     usertoken = localStorage.getItem('accessToken');
     getacdcuser();
-    getWeeklyActivity();
-    unitTest();
-    
+    getWeeklyActivity();    
     console.log("Validating Country...");
     if(country != 'US'){
         console.log("Country: "+country+" .Save week feature disabled");
@@ -93,15 +91,6 @@ var saveweekaction = function() {
     location.reload(true);
 }
 
-//util method
-var unitTest = function(){
-    var taskkey = 458;
-    var currentDay = transformDate(firstDateWeek);
-    console.log(compareActivity(taskkey,currentDay));
-    firstDateWeek.setDate(firstDateWeek.getDate()+1);
-    var currentDay = transformDate(firstDateWeek);
-    console.log(compareActivity(taskkey,currentDay));
-}
 
 var transformDate = function(date){
     var dd = String(date.getDate()).padStart(2, '0');
@@ -237,7 +226,6 @@ var getWeeklyActivity = function(){
 
     $.ajax(settings).done(function (response) {
         weekActivity = response;
-        console.log(weekActivity);
     });
 }
 
